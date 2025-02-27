@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Donut Shop - Types and Flavours
+{% endblock %}
+
+{% block content %}
+<h1>Types and Flavours</h1>
+<p>Here are the types and flavours of donuts we sell:</p>
+
+<h2>Donut Types</h2>
+<ul>
+    {% for t in types %}
+        <li>{{t.name}} - ${{t.price|floatformat:2}}</li>
+    {% endfor %}
+</ul>
+
+<h2>Donut Flavours</h2>
+<ul>
+    {% for f in flavours %}
+        <li>{{f.name}}</li>
+    {% endfor %}
+</ul>
+{% endblock %}
