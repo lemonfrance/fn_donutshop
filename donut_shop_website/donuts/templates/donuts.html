@@ -6,19 +6,27 @@ Donut Shop - Types and Flavours
 
 {% block content %}
 <h1>Types and Flavours</h1>
-<p>Here are the types and flavours of donuts we sell:</p>
+<p>Regardless of flavour, the pricing is based on what ingredients the donuts themselves are made of. 
+    Here are the types and flavours of donuts we sell:</p>
 
 <h2>Donut Types</h2>
 <ul>
     {% for t in types %}
-        <li>{{t.name}} - ${{t.price|floatformat:2}}</li>
+        <li>
+            {{t.name}} (${{t.price|floatformat:2}}) - {{t.description}}<br>
+            <img id="details_img" src="/media/{{t.image}}">
+        </li>
+    {% empty %}
+        <li>Sorry, no donut types are available at the moment.</li>
     {% endfor %}
 </ul>
 
 <h2>Donut Flavours</h2>
 <ul>
     {% for f in flavours %}
-        <li>{{f.name}}</li>
+        <li><a href="details/{{f.id}}">{{f.name}}</a></li>
+    {% empty %}
+        <li>Sorry, no donut flavours are available at the moment.</li>
     {% endfor %}
 </ul>
 {% endblock %}

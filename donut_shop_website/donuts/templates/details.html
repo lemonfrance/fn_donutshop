@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Donut Shop - Donut Details
+{% endblock %}
+
+{% block content %}
+
+<h1><a class="back_button" href="/donuts">&lt;</a> {{rqFlavour.name}}</h1>
+
+<img id="details_img" src="{{ rqFlavour.image.url }}">
+<p>{{rqFlavour.description}}</p>
+
+{% endblock %}
