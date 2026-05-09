@@ -1,4 +1,7 @@
-# From https://djangowaves.com/tips-tricks/gitignore-for-a-django-project/
+# From https://djangowaves.com/tips-tricks/gitignore-for-a-django-project/ with slight modifications
+
+# MacOS #
+.DS_Store
 
 # Django #
 *.log
