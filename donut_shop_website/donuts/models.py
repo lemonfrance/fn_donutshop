@@ -17,7 +17,7 @@ class Type(models.Model):
     price = models.FloatField(default=0.00)
     image = models.ImageField(default='placeholder.png', blank=True)
     def __str__(self):
-        return f"{self.name} - ${self.price}"
+        return self.name
 
 class Customer(models.Model):
     firstName = models.CharField(max_length=255)
@@ -39,13 +39,13 @@ class Order(models.Model):
     custID = models.ForeignKey(Customer, on_delete=models.CASCADE)
     date = models.DateField(auto_now_add=True)
     def __str__(self):
-        return f"Order by {self.customer} ({self.date})"
+        return f"Order by {self.custID} ({self.date})"
 
 class Ordered_Donuts(models.Model):
-    orderID = models.ForeignKey(Order, on_delete=models.CASCADE)
-    flavorID = models.ForeignKey(Flavour, on_delete=models.CASCADE)
-    typeID = models.ForeignKey(Type, on_delete=models.CASCADE)
+    orderID = models.ForeignKey(Order, default='0', on_delete=models.CASCADE) 
+    typeID = models.ForeignKey(Type, default='0', on_delete=models.CASCADE)
+    flavorID = models.ForeignKey(Flavour, default='0', on_delete=models.CASCADE)
     quantity = models.IntegerField()
     def __str__(self):
-        return f"{self.order} - {self.flavor} {self.type} ({self.quantity}x)"
+        return f"{self.orderID} - {self.flavorID} {self.typeID} ({self.quantity}x)"
     
