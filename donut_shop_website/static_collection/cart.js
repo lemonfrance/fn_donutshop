@@ -3,15 +3,21 @@ function delFromCart(e) {
 }
 
 function addToCart() {
-  var new_donuts = document.createElement("div")
-  new_donuts.className = "cartItems";
+  var cart = document.getElementById("donut_cart");
+  var totalItems = document.getElementById("id_orderedDonuts-TOTAL_FORMS"); //hidden id for django formsets
+  var itemCount = parseInt(totalItems.value);
 
-  var donut_type = document.getElementById("type").value;
-  var donut_flavour = document.getElementById("flavour").value;
-  var donut_qty = document.getElementById("quantity").value;
+  //clone last cart item
+  var items = document.getElementsByClassName("cartItems");
+  var lastItem = items[items.length-1];
 
-  new_donuts.innerHTML = "<strong>"+donut_flavour+"</strong> - "+donut_type+" ("+donut_qty+"x)";
-  new_donuts.innerHTML += "<button class='delItemBtn' onclick='delFromCart(this)'> X </button>";
+  var newItem = lastItem.cloneNode(true);
 
-  document.getElementById("donut_cart").appendChild(new_donuts);
+  newItem.innerHTML = newItem.innerHTML.replace(new RegExp(`orderedDonuts-${itemCount-1}`,'g'), `orderedDonuts-${itemCount}`);
+  newItem.style.display = "block";
+
+  //add form (full-stack)
+  totalItems.value = itemCount + 1;
+  cart.appendChild(newItem);
+  
 }
