@@ -7,64 +7,30 @@ Donut Shop - Order
 {% block content %}
 <h1>Order</h1>
 
-<form id="order_form" method="post">
-<div id="personal_details">
-    <!--HIDE DIV if logged in-->
-    <h3>Personal Details:</h3>
-    Fill this form or <a href="/login">sign up</a> instead to efficiently reuse your details whenever you order from us.
-    <p>
-    <label>First Name:</label><input type="text" required>
-    </p>
-    <p>
-    <label>Last Name:</label><input type="text" required>
-    </p>
-    <p>
-    <label>Address:</label><textarea></textarea required>
-    </p>
-    <p>
-    <label>Phone Number:</label><input type="tel" required>
-    </p>
-    <p>
-    <label>Email Address:</label><input type="email">
-    </p>
-</div>
+<form id="order_form" method="POST">
+    {% csrf_token %}
+    {{ customer_form.as_p }}
 
-<hr>
-<br>
+    {% load static %}
+    <script src="{% static 'cart.js' %}"></script>
 
-{% load static %}
-<script src="{% static 'cart.js' %}"></script>
-<div id="donut_cart">
-    <h3>Donut Cart:</h3>
-    
-</div>
-
-<div id="donut_adder">
-    <span>
-        <label>Type:</label>
-        <select name="type" id="type" required>
-            {% for t in types %}
-                <option value="{{t.name}}">{{t.name}}</option>
-            {% endfor %}
-        </select>
-    </span>
-
-    <span>
-    <label>Flavour:</label>
-    <select name="flavour" id="flavour" required>
-        {% for f in flavours %}
-            <option value="{{f.name}}">{{f.name}}</option>
+    <div id="donut_cart"> 
+        <h3>Donut Cart:</h3> 
+        {{orderedDonuts_formset.management_form}}
+        {% for od in orderedDonuts_formset %}
+            <div class="cartItems">
+                {% csrf_token %}
+                <button class='delItemBtn' onclick='delFromCart(this)'> X </button>
+                {{ od.as_p }}
+            </div>
         {% endfor %}
-    </select>
-    </span>
+    </div>
 
-    <span>
-        <label>Quantity:</label> 
-        <input type="number" id="quantity" name="quantity" min="1" value="1" required>
-    </span>
-    <input class="buttons misc" onclick="addToCart()" type="button" value="+ add to cart">
-</div>
-<br>
+    <div id="donut_adder">
+        <input class="buttons misc" onclick="addToCart()" type="button" value="+ add item">
+    </div>
+
+    <br>
 <input class="buttons submit" type="submit" value="SUBMIT ORDER" style="font-weight: bolder;">
 </form>
 {% endblock %}
